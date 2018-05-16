@@ -42,6 +42,7 @@ function checkCollisions() {
         
     };
 };
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -124,7 +125,7 @@ function updatePointCounter() {
 function starsCount() {
     let starsCount = 5;
     if (collision === true) {
-        starsCount--;
+        starsCount -= 1;
     }
     return starsCount;
 };
@@ -150,6 +151,7 @@ $('.restart, .button').on('click', function() {
     $('.runner').runner('reset', true);
     pointCounter = 0;
     updateStarRating();
+    collision = false;
     // $('.score-popup').hide();
     // $('.score-window').hide();
     init();
