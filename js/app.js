@@ -1,3 +1,11 @@
+
+//GLobal 
+
+let collision = false;
+let stars = 5;
+let pointCounter = 0;
+
+
 // Enemies player must avoid
 var Enemy = function(x, y, speed) {
 
@@ -19,14 +27,11 @@ Enemy.prototype.update = function(dt) {
         this.x = -50;
         this.speed = 100 + Math.floor(Math.random() * 400);
     };
-
-    // Checks for collisions between the player and the enemies from 
-    // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-//collision detected!
 };
 
-let collision = false;
-
+// Checks for collisions between the player and the enemies from 
+// https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+//collision detected!
 function checkCollisions() {
 
     for (var i = 0; i < allEnemies.length; i++) {
@@ -35,9 +40,9 @@ function checkCollisions() {
             player.x + 80 > enemy.x &&
             player.y < enemy.y + 60 &&
             60 + player.y > enemy.y) {
-            player.x = 202;
-            player.y = 405;
+            resetPlayer();
             collision = true;
+            updateStarRating();
         };
         
     };
@@ -85,12 +90,10 @@ Player.prototype.handleInput = function(keyPress) {
 
     if (this.y < 0) {
         setTimeout(() => {
-            this.x = 202;
-            this.y = 405;
+            resetPlayer();
         }, 100);
     };
     $('.runner').runner('start');
-    updateStarRating();
 };
 
 // Now instantiate your objects.
@@ -107,7 +110,11 @@ enemyLocation.forEach(function (locationY) {
 
 var player = new Player(202, 405);
 
-let pointCounter = 0;
+function resetPlayer() {
+    player.x = 202;
+    player.y = 405;
+}
+
 function updatePointCounter() {
     pointCounter += 10;
     $('span.points').text(pointCounter);
@@ -122,8 +129,8 @@ function updatePointCounter() {
 
 
 //Counts stars
-function starsCount() {
-    let starsCount = 5;
+function starsCounter() {
+    let starsCount = stars;
     if (collision === true) {
         starsCount -= 1;
     }
@@ -137,7 +144,7 @@ function updateStarRating() {
             <i class='fa fa-star'></i>
         </li>
     `;
-    let starsNumber = starsCount();
+    let starsNumber = starsCounter();
     $('.stars').empty();
     for (let i = 0; i < starsNumber; i = i + 1) {
         $('.stars').append(star);
@@ -152,6 +159,7 @@ $('.restart, .button').on('click', function() {
     pointCounter = 0;
     updateStarRating();
     collision = false;
+    resetPlayer();
     // $('.score-popup').hide();
     // $('.score-window').hide();
     init();
