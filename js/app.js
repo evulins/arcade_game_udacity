@@ -132,9 +132,9 @@ function updatePointCounter() {
 function starsCounter() {
     let starsCount = stars;
     if (collision === true) {
-        starsCount -= 1;
+        stars -= 1;
     }
-    return starsCount;
+    return stars;
 };
 
 //Updates stare raiting
@@ -149,7 +149,7 @@ function updateStarRating() {
     for (let i = 0; i < starsNumber; i = i + 1) {
         $('.stars').append(star);
     }
-}
+};
 
 //Resets the game and the score
 $('.restart, .button').on('click', function() {
@@ -166,32 +166,30 @@ $('.restart, .button').on('click', function() {
 });
 
 //Displays final score
-// function displayFinalScore() {
-//     let starsNumber = $('li.match').length;
-//     if (matchCards === cards.length) {
-//         $('.runner').runner('stop');
-//         setTimeout (
-//             function() {
-//                 const time = $('.runner').text();
-//                 const stars = starsCount();
-//                 const scorePopup = $('.score-popup');
-//                 scorePopup.find('.totalPoints').text(pointCounter);
-//                 scorePopup.find('.totalTime').text(time);
-//                 scorePopup.find('.totalStars').text(stars);         
-//                 scorePopup.show();
-//                 $('.score-window').show();
-//             },
-//             500
-//         )
-//     }
-// }
+function displayFinalScore() {
+    let starsNumber = starsCounter();
+    if (starsNumber < 0) {
+        $('.runner').runner('stop');
+        setTimeout (
+            function() {
+                const time = $('.runner').text();
+                const scorePopup = $('.score-popup');
+                scorePopup.find('.totalPoints').text(pointCounter);
+                scorePopup.find('.totalTime').text(time);         
+                scorePopup.show();
+                $('.score-window').show();
+            },
+            500
+        )
+    }
+}
 
 //Closes pop-up with the final score
-// $('.close').on('click', function() {
-//     event.preventDefault();
-//     $('.score-popup').hide();
-//     $('.score-window').hide();
-// });
+$('.close').on('click', function() {
+    event.preventDefault();
+    $('.score-popup').hide();
+    $('.score-window').hide();
+});
 
 
 // This listens for key presses and sends the keys to your
