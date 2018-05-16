@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Effective JavaScript: Frogger</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<header>
+            <h1>Arcady Game</h1>
+        </header>
+		<section class="score-panel">
+			<!-- List of stars -->
+		    <ul class="stars"></ul>
+		    <!-- Point counter -->
+			<span class="points">0</span> Points
+		    <!-- Stopwatch -->
+		    <span class="runner"></span> sec.
+		    <!-- Button which restarts the game -->
+		    <div class="restart">
+				<i class="fa fa-repeat"></i>
+			</div>
+		</section>
+		<div class="score-popup", style="display: none;">
+		    <a href="#"><span class="fa fa-times close"></span></a>
+		    <p>Game over!</p>
+		    <p>Total moves:  <span class="totalMoves"></span> </p>
+		    <p>Time:  <span class="totalTime"></span> sec.</p>
+		    <a href="#"><input type="button" class="button" value="Let's play again!" /></a>
+		</div>
+		<div class="score-window", style="display: none;"></div>
+	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/jquery.runner-min.js" type="text/javascript"></script>
+    <script src="js/resources.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/engine.js"></script>
+</body>
+</html>
