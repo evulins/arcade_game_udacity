@@ -157,18 +157,20 @@ $('.restart, .button').on('click', function() {
     $('span.points').text('0');
     $('.runner').runner('reset', true);
     pointCounter = 0;
-    updateStarRating();
     collision = false;
+    stars = 5;
+    updateStarRating();
     resetPlayer();
-    // $('.score-popup').hide();
-    // $('.score-window').hide();
+    $('.score-popup').hide();
+    $('.score-window').hide();
     init();
 });
 
 //Displays final score
 function displayFinalScore() {
     let starsNumber = starsCounter();
-    if (starsNumber < 0) {
+    console.log(starsNumber);
+    if (starsNumber === 0) {
         $('.runner').runner('stop');
         setTimeout (
             function() {

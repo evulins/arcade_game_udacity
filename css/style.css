@@ -21,7 +21,7 @@ h1 {
 
 .score-panel {
     text-align: center;
-    width: 345px;
+    width: 25%;
 }
 
 .score-panel .stars {
@@ -41,12 +41,12 @@ h1 {
     cursor: pointer;
 }
 
-.score-panel .moves {
-    padding-left: 50px;
+.score-panel .points {
+    padding-left: 20px;
 }
 
 .score-panel .runner {
-    padding-left: 50px;
+    padding-left: 20px;
 }
 
 
