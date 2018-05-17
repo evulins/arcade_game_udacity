@@ -66,7 +66,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         $('.runner').runner();
-        updateStarRating();
+        updateHeartRating();
         main();
     }
 

@@ -1,8 +1,8 @@
 
-//GLobal 
+// Global variable
 
 let collision = false;
-let stars = 5;
+let hearts = 5;
 let pointCounter = 0;
 
 
@@ -13,8 +13,6 @@ var Enemy = function(x, y, speed) {
     this.y = y;
     this.speed = speed;
     this.sprite = "images/enemy-bug.png";
-    // this is called every time you do `new Enemy(n,n)
-    // the new object will automatically be pushed to the array.
 };
 
 // Updates the enemy's position and multiplies any movement by the dt parameter
@@ -31,7 +29,8 @@ Enemy.prototype.update = function(dt) {
 
 // Checks for collisions between the player and the enemies from 
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-//collision detected!
+//If collision is detected than player goes back to the start point and looses one heart each time.
+//If player has no hearts left then game is over.
 function checkCollisions() {
 
     for (var i = 0; i < allEnemies.length; i++) {
@@ -42,20 +41,19 @@ function checkCollisions() {
             60 + player.y > enemy.y) {
             resetPlayer();
             collision = true;
-            updateStarRating();
+            updateHeartRating();
+            displayFinalScore();
         };
         
     };
 };
 
-// Draw the enemy on the screen, required method for game
+// Draws the enemy on the screen
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Player class
 var Player = function(x, y) {
     this.x = x;
     this.y = y;
@@ -65,10 +63,12 @@ var Player = function(x, y) {
 Player.prototype.update = function(dt) {
 };
 
+// Draws the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.player), this.x, this.y);
 };
 
+// Handles the player's moves
 Player.prototype.handleInput = function(keyPress) {
     if (keyPress === 'left' && this.x > 0) {
         this.x -= 102;
@@ -83,7 +83,7 @@ Player.prototype.handleInput = function(keyPress) {
     if (keyPress === 'down' && this.y < 405) {
         this.y += 83;
     };
-
+// If player reaches the water, gets points and comes back to the start point
     if (this.y < 5) {
         updatePointCounter();
     };
@@ -93,61 +93,60 @@ Player.prototype.handleInput = function(keyPress) {
             resetPlayer();
         }, 100);
     };
-    $('.runner').runner('start');
+// Starts the stopwatch
+    if (keyPress === 'right' || keyPress === 'left' || keyPress === 'down' || keyPress === 'up') {
+        $('.runner').runner('start');
+    };
+    
 };
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Places all enemy objects in an array
 var allEnemies = [];
 
+// Sets enemies posistions
 var enemyLocation = [63, 147, 230];
 
-enemyLocation.forEach(function (locationY) {
-    enemy = new Enemy(0, locationY, 200);
+enemyLocation.forEach(function (y) {
+    enemy = new Enemy(0, y, 200);
     allEnemies.push(enemy);
 });
 
+// Places the player object and sets it's position
 var player = new Player(202, 405);
 
+// Resets the player position
 function resetPlayer() {
     player.x = 202;
     player.y = 405;
 }
 
+
+// Updates player's points
 function updatePointCounter() {
     pointCounter += 10;
     $('span.points').text(pointCounter);
 }
 
-// $('.close').on('click', function() {
-//     event.preventDefault();
-//     $('.score-popup').hide();
-//     $('.score-window').hide();
-// });
-
-
-
-//Counts stars
-function starsCounter() {
-    let starsCount = stars;
+//Counts hearts (lifes)
+function heartsCounter() {
+    let heartsCount = hearts;
     if (collision === true) {
-        stars -= 1;
+        hearts -= 1;
     }
-    return stars;
+    return hearts;
 };
 
-//Updates stare raiting
-function updateStarRating() {
-    const star = `
+//Updates heart raiting
+function updateHeartRating() {
+    const heart = `
         <li>
-            <i class='fa fa-star'></i>
+            <i class="fas fa-heart"></i>
         </li>
     `;
-    let starsNumber = starsCounter();
-    $('.stars').empty();
-    for (let i = 0; i < starsNumber; i = i + 1) {
-        $('.stars').append(star);
+    let heartsNumber = heartsCounter();
+    $('.hearts').empty();
+    for (let i = 0; i < heartsNumber; i = i + 1) {
+        $('.hearts').append(heart);
     }
 };
 
@@ -158,19 +157,16 @@ $('.restart, .button').on('click', function() {
     $('.runner').runner('reset', true);
     pointCounter = 0;
     collision = false;
-    stars = 5;
-    updateStarRating();
+    hearts = 5;
+    updateHeartRating();
     resetPlayer();
     $('.score-popup').hide();
     $('.score-window').hide();
-    init();
 });
 
-//Displays final score
+//Ends game and displays final score
 function displayFinalScore() {
-    let starsNumber = starsCounter();
-    console.log(starsNumber);
-    if (starsNumber === 0) {
+    if (hearts  === 0) {
         $('.runner').runner('stop');
         setTimeout (
             function() {
@@ -186,16 +182,8 @@ function displayFinalScore() {
     }
 }
 
-//Closes pop-up with the final score
-$('.close').on('click', function() {
-    event.preventDefault();
-    $('.score-popup').hide();
-    $('.score-window').hide();
-});
 
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Listens for key presses and sends the keys
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -205,4 +193,5 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+
 });
