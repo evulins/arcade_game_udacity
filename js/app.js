@@ -6,7 +6,6 @@ let hearts = 5;
 let pointCounter = 0;
 let gameOver = false;
 
-
 // Enemies player must avoid
 var Enemy = function(x, y, speed) {
 
@@ -94,11 +93,10 @@ Player.prototype.handleInput = function(keyPress) {
             resetPlayer();
         }, 100);
     };
-// Starts the stopwatch
+// Starts the stopwatch by pressing one of allowedKeys
     if (gameOver === false && (keyPress === 'right' || keyPress === 'left' || keyPress === 'down' || keyPress === 'up')) {
         $('.runner').runner('start');
-    };
-    
+    }; 
 };
 
 // Places all enemy objects in an array
@@ -127,13 +125,11 @@ function updatePointCounter() {
     $('span.points').text(pointCounter);
 }
 
-// Counts hearts (lifes)
-function heartsCounter() {
-    let heartsCount = hearts;
+// If collision is detected then decreases amount of hearts (lifes)
+function updateHeartsCounter() {
     if (collision === true) {
         hearts -= 1;
     }
-    return hearts;
 }
 
 // Updates heart rating
@@ -143,9 +139,9 @@ function updateHeartRating() {
             <i class="fas fa-heart"></i>
         </li>
     `;
-    let heartsNumber = heartsCounter();
+    updateHeartsCounter();
     $('.hearts').empty();
-    for (let i = 0; i < heartsNumber; i = i + 1) {
+    for (let i = 0; i < hearts; i = i + 1) {
         $('.hearts').append(heart);
     }
 }
@@ -193,7 +189,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
