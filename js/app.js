@@ -22,7 +22,7 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
 
     if (this.x > 510) {
-        this.x = -50;
+        this.x = -80;
         this.speed = 100 + Math.floor(Math.random() * 400);
     };
 };
@@ -69,18 +69,18 @@ Player.prototype.render = function() {
 };
 
 // Handles the player's moves
-Player.prototype.handleInput = function(keyPress) {
-    if (keyPress === 'left' && this.x > 0) {
-        this.x -= 102;
+Player.prototype.handleInput = function(key) {
+    if (key === 'left' && this.x > 0) {
+        this.x -= 101;
     };
-    if (keyPress === 'right' && this.x < 405) {
-        this.x += 102;
+    if (key === 'right' && this.x < 400) {
+        this.x += 101;
     };
-    if (keyPress === 'up' && this.y > 0) {
+    if (key === 'up' && this.y > 0) {
         this.y -= 83;
     };
 
-    if (keyPress === 'down' && this.y < 405) {
+    if (key === 'down' && this.y < 400) {
         this.y += 83;
     };
 // If player reaches the water, gets points and comes back to the start point
@@ -94,7 +94,7 @@ Player.prototype.handleInput = function(keyPress) {
         }, 100);
     };
 // Starts the stopwatch by pressing one of allowedKeys
-    if (gameOver === false && (keyPress === 'right' || keyPress === 'left' || keyPress === 'down' || keyPress === 'up')) {
+    if (gameOver === false && (key === 'right' || key === 'left' || key === 'down' || key === 'up')) {
         $('.runner').runner('start');
     }; 
 };
@@ -103,7 +103,7 @@ Player.prototype.handleInput = function(keyPress) {
 var allEnemies = [];
 
 // Sets enemies posistions
-var enemyLocation = [63, 147, 230];
+var enemyLocation = [60, 140, 225];
 
 enemyLocation.forEach(function (y) {
     enemy = new Enemy(0, y, 200);
@@ -111,12 +111,12 @@ enemyLocation.forEach(function (y) {
 });
 
 // Places the player object and sets it's position
-var player = new Player(202, 405);
+var player = new Player(200, 400);
 
 // Resets the player position
 function resetPlayer() {
-    player.x = 202;
-    player.y = 405;
+    player.x = 200;
+    player.y = 400;
 }
 
 // Updates player's points
