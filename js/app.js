@@ -40,8 +40,8 @@ function checkCollisions() {
             player.x + 80 > enemy.x &&
             player.y < enemy.y + 60 &&
             60 + player.y > enemy.y) {
-            resetPlayer();
             collision = true;
+            resetPlayer();
             updateHeartRating();
             displayFinalScore();
         };
@@ -127,7 +127,7 @@ function updatePointCounter() {
     $('span.points').text(pointCounter);
 }
 
-//Counts hearts (lifes)
+// Counts hearts (lifes)
 function heartsCounter() {
     let heartsCount = hearts;
     if (collision === true) {
@@ -136,7 +136,7 @@ function heartsCounter() {
     return hearts;
 }
 
-//Updates heart raiting
+// Updates heart rating
 function updateHeartRating() {
     const heart = `
         <li>
@@ -150,7 +150,7 @@ function updateHeartRating() {
     }
 }
 
-//Resets the game and the score
+// Resets the game and the score
 $('.restart, .button').on('click', function() {
     event.preventDefault();
     gameOver = false;
@@ -165,7 +165,7 @@ $('.restart, .button').on('click', function() {
     $('.score-window').hide();
 });
 
-//Ends game and displays final score
+// Ends game and displays final score
 function displayFinalScore() {
     if (hearts  === 0) {
         $('.runner').runner('stop');
@@ -184,7 +184,7 @@ function displayFinalScore() {
     }
 }
 
-// Listens for key presses and sends the keys
+// Listens for key presses and sends the keys to player.handleInput
 document.addEventListener('keyup', function(e) {
    
     var allowedKeys = {
