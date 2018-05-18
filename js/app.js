@@ -1,6 +1,5 @@
 
-// Global variable
-
+// Global variables
 let collision = false;
 let hearts = 5;
 let pointCounter = 0;
@@ -30,7 +29,7 @@ Enemy.prototype.update = function(dt) {
 // Checks for collisions between the player and the enemies from 
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 //If collision is detected than player goes back to the start point and looses one heart each time.
-//If player has no hearts left then game is over.
+//If player has no hearts left then the game is over.
 function checkCollisions() {
 
     for (var i = 0; i < allEnemies.length; i++) {
@@ -46,7 +45,7 @@ function checkCollisions() {
         };
         
     };
-};
+}
 
 // Draws the enemy on the screen
 Enemy.prototype.render = function () {
@@ -100,11 +99,7 @@ Player.prototype.handleInput = function(keyPress) {
     
 };
 
-// Places all enemy objects in an array
-var allEnemies = [];
 
-// Sets enemies posistions
-var enemyLocation = [63, 147, 230];
 
 enemyLocation.forEach(function (y) {
     enemy = new Enemy(0, y, 200);
@@ -120,7 +115,6 @@ function resetPlayer() {
     player.y = 405;
 }
 
-
 // Updates player's points
 function updatePointCounter() {
     pointCounter += 10;
@@ -134,7 +128,7 @@ function heartsCounter() {
         hearts -= 1;
     }
     return hearts;
-};
+}
 
 //Updates heart raiting
 function updateHeartRating() {
@@ -148,7 +142,7 @@ function updateHeartRating() {
     for (let i = 0; i < heartsNumber; i = i + 1) {
         $('.hearts').append(heart);
     }
-};
+}
 
 //Resets the game and the score
 $('.restart, .button').on('click', function() {
@@ -182,9 +176,9 @@ function displayFinalScore() {
     }
 }
 
-
 // Listens for key presses and sends the keys
 document.addEventListener('keyup', function(e) {
+   
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -192,6 +186,6 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
 
+    player.handleInput(allowedKeys[e.keyCode]);
 });
