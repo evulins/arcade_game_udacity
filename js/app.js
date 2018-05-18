@@ -1,8 +1,10 @@
 
 // Global variables
+
 let collision = false;
 let hearts = 5;
 let pointCounter = 0;
+let gameOver = false;
 
 
 // Enemies player must avoid
@@ -28,8 +30,8 @@ Enemy.prototype.update = function(dt) {
 
 // Checks for collisions between the player and the enemies from 
 // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-//If collision is detected than player goes back to the start point and looses one heart each time.
-//If player has no hearts left then the game is over.
+// If collision is detected than player goes back to the start point and looses one heart each time.
+// If player has no hearts left then the game is over.
 function checkCollisions() {
 
     for (var i = 0; i < allEnemies.length; i++) {
@@ -45,7 +47,7 @@ function checkCollisions() {
         };
         
     };
-}
+};
 
 // Draws the enemy on the screen
 Enemy.prototype.render = function () {
@@ -93,13 +95,17 @@ Player.prototype.handleInput = function(keyPress) {
         }, 100);
     };
 // Starts the stopwatch
-    if (keyPress === 'right' || keyPress === 'left' || keyPress === 'down' || keyPress === 'up') {
+    if (gameOver === false && (keyPress === 'right' || keyPress === 'left' || keyPress === 'down' || keyPress === 'up')) {
         $('.runner').runner('start');
     };
     
 };
 
+// Places all enemy objects in an array
+var allEnemies = [];
 
+// Sets enemies posistions
+var enemyLocation = [63, 147, 230];
 
 enemyLocation.forEach(function (y) {
     enemy = new Enemy(0, y, 200);
@@ -147,6 +153,7 @@ function updateHeartRating() {
 //Resets the game and the score
 $('.restart, .button').on('click', function() {
     event.preventDefault();
+    gameOver = false;
     $('span.points').text('0');
     $('.runner').runner('reset', true);
     pointCounter = 0;
@@ -162,6 +169,7 @@ $('.restart, .button').on('click', function() {
 function displayFinalScore() {
     if (hearts  === 0) {
         $('.runner').runner('stop');
+        gameOver = true;
         setTimeout (
             function() {
                 const time = $('.runner').text();
